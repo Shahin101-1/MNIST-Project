@@ -255,7 +255,7 @@ form.show()
 app.exec_()
 
 from PIL import Image,ImageOps
-image = Image.open('./4.png')
+image = Image.open('./8.png')
 image = image.convert('L')
 in_image= ImageOps.invert(image)
 plt.figure('image')
