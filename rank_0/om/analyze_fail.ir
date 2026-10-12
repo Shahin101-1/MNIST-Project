@@ -1,0 +1,783 @@
+# ===============================================================================================
+# The following shows the last analyze fail log message.
+# ===============================================================================================
+
+----------------------------------------------------
+- Caught exception:
+----------------------------------------------------
+For 'MatMul' the input dimensions must be equal, but got 'x1_col': 542 and 'x2_row': 512.
+
+----------------------------------------------------
+- C++ Call Stack: (For framework developers)
+----------------------------------------------------
+mindspore/ops/infer/ops_func_impl//matmul.cc:78 mindspore::ops::MatMulFuncImpl::InferShape2D
+
+----------------------------------------------------
+- The Traceback of Net Construct Code:
+----------------------------------------------------
+# 0 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:424~425, 8~46
+        if not self.sense_flag:
+# 1 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:425, 19~46
+            return self._no_sens_impl(*inputs)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 2 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:445~446, 8~95
+        if self.use_graceful_exit:
+# 3 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:448~452, 8~45
+        if self.return_grad:
+# 4 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:442, 15~36
+        loss = self.network(*inputs)
+               ^~~~~~~~~~~~~~~~~~~~~
+# 5 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:122, 14~34
+        out = self._backbone(data)
+              ^~~~~~~~~~~~~~~~~~~~
+# 6 In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~33
+        output = self.fc2(output)
+                 ^~~~~~~~~~~~~~~~
+# 7 In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~25
+        output = self.fc2(output)
+                 ^~~~~~~~
+# 8 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:808~809, 8~43
+        if self.has_bias:
+# 9 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 12~43
+            x = self.bias_add(x, self.bias)
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 10 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:810~811, 8~34
+        if self.activation_flag:
+# 11 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:811, 12~34
+            x = self.activation(x)
+            ^~~~~~~~~~~~~~~~~~~~~~
+# 12 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42
+        if len(x_shape) != 2:
+# 13 In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:807, 12~39
+        x = self.matmul(x, self.weight)
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ===============================================================================================
+# The following shows the IR when the function graphs evaluation fails to help locate the problem.
+# You can search the last ------------------------> to the node which is evaluated failure.
+# Refer to https://www.mindspore.cn/search?inputValue=analyze_fail.ir to get more instructions.
+# ===============================================================================================
+
+# IR entry: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17
+# Total subgraphs: 0
+
+# Attrs:
+training: 1
+compile_phase: train.1788684953196533760.2032675665680.0
+
+# Total params: 5
+# Params:
+%para1_inputs0: <null>
+%para2_inputs1: <null>
+%para3_fc1.weight: <Ref[Tensor[Float32]], (542, 784), ref_key=fc1.weight, is_parameter>  :  has_default
+%para4_fc1.bias: <Ref[Tensor[Float32]], (542), ref_key=fc1.bias, is_parameter>  :  has_default
+%para5_fc2.weight: <Ref[Tensor[Float32]], (128, 512), ref_key=fc2.weight, is_parameter>  :  has_default
+
+subgraph attr:
+training: 1
+compile_phase: train.1788684953196533760.2032675665680.0
+subgraph instance: mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17 : 000001D94989C090
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:423~438, 4~19/    def construct(self, *inputs):/
+subgraph @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17() {
+  %0(CNode_43) = resolve(NameSpace[Entry: 'mindspore.nn.wrap.cell_wrapper.TrainOneStepCell.construct'], mindspore.nn.wrap.cell_wrapper.TrainOneStepCell.construct)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+  %1(CNode_44) = MakeTuple(%para1_inputs0, %para2_inputs1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>)
+      #scope: (Default)
+
+#------------------------> 0
+  %2(CNode_45) = DoUnpackCall(%0, %1)
+      : (<Func, NoShape>, <Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>) -> (<null>)
+      #scope: (Default)
+  Return(%2)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:424~425, 8~46/        if not self.sense_flag:/
+}
+# Order:
+#   1: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17:CNode_43{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Entry: 'mindspore.nn.wrap.cell_wrapper.TrainOneStepCell.construct', [2]: ValueNode<Symbol> mindspore.nn.wrap.cell_wrapper.TrainOneStepCell.construct}
+#   2: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17:CNode_45{[0]: ValueNode<Primitive> DoUnpackCall, [1]: CNode_43, [2]: CNode_44}
+#   3: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_17:CNode_46{[0]: ValueNode<Primitive> Return, [1]: CNode_45}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_18 : 000001D94989ED10
+
+subgraph @UnpackCall_18(%para0_Parameter_19, %para0_Parameter_20) {
+  %0(CNode_47) = TupleGetItem(%para0_Parameter_20, I64(0))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Float32], (32, 1, 28, 28)>)
+      #scope: (Default)
+  %1(CNode_48) = TupleGetItem(%para0_Parameter_20, I64(1))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Int32], (32)>)
+      #scope: (Default)
+
+#------------------------> 1
+  %2(CNode_49) = Parameter_19(%0, %1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<null>)
+      #scope: (Default)
+  Return(%2)
+      : (<null>)
+      #scope: (Default)
+}
+# Order:
+#   1: @UnpackCall_18:CNode_49{[0]: param_Parameter_19, [1]: CNode_47, [2]: CNode_48}
+#   2: @UnpackCall_18:CNode_50{[0]: ValueNode<Primitive> Return, [1]: CNode_49}
+
+
+subgraph attr:
+training: 1
+compile_phase: train.1788684953196533760.2032675665680.0
+subgraph instance: mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21 : 000001D94989FDC0
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:423~438, 4~19/    def construct(self, *inputs):/
+subgraph @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21(%para0_inputs0, %para0_inputs1) {
+
+#------------------------> 2
+  %0(CNode_51) = call @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22()
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:424~425, 8~46/        if not self.sense_flag:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:424~425, 8~46/        if not self.sense_flag:/
+}
+# Order:
+#   1: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21:CNode_51{[0]: ValueNode<FuncGraph> mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22}
+#   2: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21:CNode_52{[0]: ValueNode<Primitive> Return, [1]: CNode_51}
+#   3: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21:CNode_53{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> _no_sens_impl}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22 : 000001D94989C620
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:423~438, 4~19/    def construct(self, *inputs):/
+subgraph @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22 parent: [subgraph @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_21]() {
+  %0(CNode_53) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], _no_sens_impl)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:425, 19~37/            return self._no_sens_impl(*inputs)/
+  %1(CNode_54) = MakeTuple(%para0_inputs0, %para0_inputs1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:423, 25~31/    def construct(self, *inputs):/
+
+#------------------------> 3
+  %2(CNode_55) = DoUnpackCall(%0, %1)
+      : (<Func, NoShape>, <Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:425, 19~46/            return self._no_sens_impl(*inputs)/
+  Return(%2)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:425, 12~46/            return self._no_sens_impl(*inputs)/
+}
+# Order:
+#   1: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22:CNode_55{[0]: ValueNode<Primitive> DoUnpackCall, [1]: CNode_53, [2]: CNode_54}
+#   2: @mindspore_nn_wrap_cell_wrapper_TrainOneStepCell_construct_22:CNode_56{[0]: ValueNode<Primitive> Return, [1]: CNode_55}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_23 : 000001D94989D140
+
+subgraph @UnpackCall_23(%para0_Parameter_24, %para0_Parameter_25) {
+  %0(CNode_57) = TupleGetItem(%para0_Parameter_25, I64(0))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Float32], (32, 1, 28, 28)>)
+      #scope: (Default)
+  %1(CNode_58) = TupleGetItem(%para0_Parameter_25, I64(1))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Int32], (32)>)
+      #scope: (Default)
+
+#------------------------> 4
+  %2(CNode_59) = Parameter_24(%0, %1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<null>)
+      #scope: (Default)
+  Return(%2)
+      : (<null>)
+      #scope: (Default)
+}
+# Order:
+#   1: @UnpackCall_23:CNode_59{[0]: param_Parameter_24, [1]: CNode_57, [2]: CNode_58}
+#   2: @UnpackCall_23:CNode_60{[0]: ValueNode<Primitive> Return, [1]: CNode_59}
+
+
+subgraph attr:
+training: 1
+subgraph instance: _no_sens_impl_26 : 000001D9498A1990
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440~453, 4~19/    def _no_sens_impl(self, *inputs):/
+subgraph @_no_sens_impl_26(%para0_inputs0, %para0_inputs1) {
+
+#------------------------> 5
+  %0(CNode_61) = call @_no_sens_impl_27()
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:445~446, 8~95/        if self.use_graceful_exit:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:445~446, 8~95/        if self.use_graceful_exit:/
+}
+# Order:
+#   1: @_no_sens_impl_26:CNode_62{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> network}
+#   2: @_no_sens_impl_26:loss{[0]: ValueNode<Primitive> DoUnpackCall, [1]: CNode_62, [2]: CNode_63}
+#   3: @_no_sens_impl_26:CNode_64{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> grad_no_sens}
+#   4: @_no_sens_impl_26:CNode_65{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> network}
+#   5: @_no_sens_impl_26:CNode_66{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> weights}
+#   6: @_no_sens_impl_67:CNode_68{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   7: @_no_sens_impl_26:CNode_69{[0]: CNode_64, [1]: CNode_65, [2]: CNode_66}
+#   8: @_no_sens_impl_26:grads{[0]: ValueNode<Primitive> DoUnpackCall, [1]: CNode_69, [2]: CNode_63}
+#   9: @_no_sens_impl_26:CNode_70{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> grad_reducer}
+#  10: @_no_sens_impl_67:CNode_71{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  11: @_no_sens_impl_26:grads{[0]: CNode_70, [1]: grads}
+#  12: @_no_sens_impl_26:CNode_61{[0]: ValueNode<FuncGraph> _no_sens_impl_27}
+#  13: @_no_sens_impl_26:CNode_72{[0]: ValueNode<Primitive> Return, [1]: CNode_61}
+#  14: @_no_sens_impl_26:CNode_73{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.nn.wrap.cell_wrapper', [2]: ValueNode<Symbol> ops}
+
+
+subgraph attr:
+training: 1
+subgraph instance: _no_sens_impl_27 : 000001D9498A3560
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440~453, 4~19/    def _no_sens_impl(self, *inputs):/
+subgraph @_no_sens_impl_27 parent: [subgraph @_no_sens_impl_26]() {
+
+#------------------------> 6
+  %0(CNode_74) = call @_no_sens_impl_28()
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:445~446, 8~95/        if self.use_graceful_exit:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:445~446, 8~95/        if self.use_graceful_exit:/
+}
+# Order:
+#   1: @_no_sens_impl_27:CNode_74{[0]: ValueNode<FuncGraph> _no_sens_impl_28}
+#   2: @_no_sens_impl_27:CNode_75{[0]: ValueNode<Primitive> Return, [1]: CNode_74}
+
+
+subgraph attr:
+training: 1
+subgraph instance: _no_sens_impl_28 : 000001D9498A1F20
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440~453, 4~19/    def _no_sens_impl(self, *inputs):/
+subgraph @_no_sens_impl_28 parent: [subgraph @_no_sens_impl_26]() {
+
+#------------------------> 7
+  %0(CNode_76) = call @_no_sens_impl_29()
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:448~452, 8~45/        if self.return_grad:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:448~452, 8~45/        if self.return_grad:/
+}
+# Order:
+#   1: @_no_sens_impl_28:CNode_77{[0]: ValueNode<Primitive> getattr, [1]: CNode_73, [2]: ValueNode<StringImm> depend}
+#   2: @_no_sens_impl_28:CNode_78{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>', [2]: ValueNode<Symbol> optimizer}
+#   3: @_no_sens_impl_79:CNode_80{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @_no_sens_impl_28:CNode_81{[0]: CNode_78, [1]: grads}
+#   5: @_no_sens_impl_79:CNode_82{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   6: @_no_sens_impl_28:loss{[0]: CNode_77, [1]: loss, [2]: CNode_81}
+#   7: @_no_sens_impl_28:CNode_76{[0]: ValueNode<FuncGraph> _no_sens_impl_29}
+#   8: @_no_sens_impl_28:CNode_83{[0]: ValueNode<Primitive> Return, [1]: CNode_76}
+
+
+subgraph attr:
+training: 1
+subgraph instance: _no_sens_impl_29 : 000001D9498A1400
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440~453, 4~19/    def _no_sens_impl(self, *inputs):/
+subgraph @_no_sens_impl_29 parent: [subgraph @_no_sens_impl_28]() {
+
+#------------------------> 8
+  %0(CNode_84) = call @_no_sens_impl_30()
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:448~452, 8~45/        if self.return_grad:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:448~452, 8~45/        if self.return_grad:/
+}
+# Order:
+#   1: @_no_sens_impl_29:CNode_84{[0]: ValueNode<FuncGraph> _no_sens_impl_30}
+#   2: @_no_sens_impl_29:CNode_85{[0]: ValueNode<Primitive> Return, [1]: CNode_84}
+
+
+subgraph attr:
+training: 1
+subgraph instance: _no_sens_impl_30 : 000001D9498A24B0
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440~453, 4~19/    def _no_sens_impl(self, *inputs):/
+subgraph @_no_sens_impl_30 parent: [subgraph @_no_sens_impl_28]() {
+  %0(CNode_73) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.nn.wrap.cell_wrapper'], ops)
+      : (<External, NoShape>, <External, NoShape>) -> (<External, NoShape>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:447, 15~18/        loss = ops.depend(loss, self.optimizer(grads))/
+  %1(CNode_77) = getattr(%0, "depend")
+      : (<External, NoShape>, <String, NoShape>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:447, 15~25/        loss = ops.depend(loss, self.optimizer(grads))/
+  %2(CNode_62) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], network)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:442, 15~27/        loss = self.network(*inputs)/
+  %3(CNode_63) = MakeTuple(%para0_inputs0, %para0_inputs1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:440, 29~35/    def _no_sens_impl(self, *inputs):/
+
+#------------------------> 9
+  %4(loss) = DoUnpackCall(%2, %3)
+      : (<Func, NoShape>, <Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:442, 15~36/        loss = self.network(*inputs)/
+  %5(CNode_78) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], optimizer)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:447, 32~46/        loss = ops.depend(loss, self.optimizer(grads))/
+  %6(CNode_70) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], grad_reducer)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:444, 16~33/        grads = self.grad_reducer(grads)/
+  %7(CNode_64) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], grad_no_sens)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:443, 16~33/        grads = self.grad_no_sens(self.network, self.weights)(*inputs)/
+  %8(CNode_65) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], network)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:443, 34~46/        grads = self.grad_no_sens(self.network, self.weights)(*inputs)/
+  %9(CNode_66) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<TrainOneStepCell::2032675665680>'], weights)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:443, 48~60/        grads = self.grad_no_sens(self.network, self.weights)(*inputs)/
+  %10(CNode_69) = %7(%8, %9)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:443, 16~61/        grads = self.grad_no_sens(self.network, self.weights)(*inputs)/
+  %11(grads) = DoUnpackCall(%10, %3)
+      : (<null>, <Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:443, 16~70/        grads = self.grad_no_sens(self.network, self.weights)(*inputs)/
+  %12(grads) = %6(%11)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:444, 16~40/        grads = self.grad_reducer(grads)/
+  %13(CNode_81) = %5(%12)
+      : (<null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:447, 32~53/        loss = ops.depend(loss, self.optimizer(grads))/
+  %14(loss) = %1(%4, %13)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:447, 15~54/        loss = ops.depend(loss, self.optimizer(grads))/
+  Return(%14)
+      : (<null>)
+      #scope: (Default)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:453, 8~19/        return loss/
+}
+# Order:
+#   1: @_no_sens_impl_30:CNode_86{[0]: ValueNode<Primitive> Return, [1]: loss}
+
+
+subgraph attr:
+core: 1
+subgraph instance: UnpackCall_31 : 000001D9498A3AF0
+
+subgraph @UnpackCall_31(%para0_Parameter_32, %para0_Parameter_33) {
+  %0(CNode_87) = TupleGetItem(%para0_Parameter_33, I64(0))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Float32], (32, 1, 28, 28)>)
+      #scope: (Default)
+  %1(CNode_88) = TupleGetItem(%para0_Parameter_33, I64(1))
+      : (<Tuple[Tensor[Float32],Tensor[Int32]], TupleShape((32, 1, 28, 28), (32))>, <Int64, NoShape>) -> (<Tensor[Int32], (32)>)
+      #scope: (Default)
+
+#------------------------> 10
+  %2(CNode_89) = Parameter_32(%0, %1)
+      : (<Tensor[Float32], (32, 1, 28, 28)>, <Tensor[Int32], (32)>) -> (<null>)
+      #scope: (Default)
+  Return(%2)
+      : (<null>)
+      #scope: (Default)
+}
+# Order:
+#   1: @UnpackCall_31:CNode_89{[0]: param_Parameter_32, [1]: CNode_87, [2]: CNode_88}
+#   2: @UnpackCall_31:CNode_90{[0]: ValueNode<Primitive> Return, [1]: CNode_89}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34 : 000001D9498A0E70
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:121~123, 4~40/    def construct(self, data, label):/
+subgraph @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34(%para0_data, %para0_label) {
+  %0(CNode_91) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<WithLossCell::2032675652720>'], _loss_fn)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:123, 15~28/        return self._loss_fn(out, label)/
+  %1(CNode_92) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<WithLossCell::2032675652720>'], _backbone)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:122, 14~28/        out = self._backbone(data)/
+
+#------------------------> 11
+  %2(out) = %1(%para0_data)
+      : (<Tensor[Float32], (32, 1, 28, 28)>) -> (<null>)
+      #scope: (Default/network-WithLossCell)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:122, 14~34/        out = self._backbone(data)/
+  %3(CNode_93) = %0(%2, %para0_label)
+      : (<null>, <Tensor[Int32], (32)>) -> (<null>)
+      #scope: (Default/network-WithLossCell)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:123, 15~40/        return self._loss_fn(out, label)/
+  Return(%3)
+      : (<null>)
+      #scope: (Default/network-WithLossCell)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\wrap\cell_wrapper.py:123, 8~40/        return self._loss_fn(out, label)/
+}
+# Order:
+#   1: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_92{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<WithLossCell::2032675652720>', [2]: ValueNode<Symbol> _backbone}
+#   2: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_94{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:out{[0]: CNode_92, [1]: param_data}
+#   5: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_91{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.wrap.cell_wrapper..<WithLossCell::2032675652720>', [2]: ValueNode<Symbol> _loss_fn}
+#   6: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_95{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_93{[0]: CNode_91, [1]: out, [2]: param_label}
+#   9: @mindspore_nn_wrap_cell_wrapper_WithLossCell_construct_34:CNode_96{[0]: ValueNode<Primitive> Return, [1]: CNode_93}
+
+
+subgraph attr:
+training: 1
+subgraph instance: __main___ForwardNN_construct_35 : 000001D9498A61E0
+# In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:67~72, 4~21/    def construct(self, input_x):/
+subgraph @__main___ForwardNN_construct_35(%para0_input_x) {
+  %0(CNode_97) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>'], fc3)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:71, 17~25/        output = self.fc3(output)/
+  %1(CNode_98) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>'], fc2)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~25/        output = self.fc2(output)/
+  %2(CNode_99) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>'], fc1)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:69, 17~25/        output = self.fc1(output)/
+  %3(CNode_100) = resolve(NameSpace[ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>'], flatten)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:68, 17~29/        output = self.flatten(input_x)/
+  %4(output) = %3(%para0_input_x)
+      : (<Tensor[Float32], (32, 1, 28, 28)>) -> (<Tensor[Float32], (32, 784)>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:68, 17~38/        output = self.flatten(input_x)/
+  %5(output) = %2(%4)
+      : (<Tensor[Float32], (32, 784)>) -> (<Tensor[Float32], (32, 542)>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:69, 17~33/        output = self.fc1(output)/
+
+#------------------------> 12
+  %6(output) = %1(%5)
+      : (<Tensor[Float32], (32, 542)>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~33/        output = self.fc2(output)/
+  %7(output) = %0(%6)
+      : (<null>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:71, 17~33/        output = self.fc3(output)/
+  Return(%7)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:72, 8~21/        return output/
+}
+# Order:
+#   1: @__main___ForwardNN_construct_35:CNode_100{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>', [2]: ValueNode<Symbol> flatten}
+#   2: @__main___ForwardNN_construct_35:CNode_101{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @__main___ForwardNN_construct_35:output{[0]: CNode_100, [1]: param_input_x}
+#   5: @__main___ForwardNN_construct_35:CNode_99{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>', [2]: ValueNode<Symbol> fc1}
+#   6: @__main___ForwardNN_construct_35:CNode_102{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @__main___ForwardNN_construct_35:output{[0]: CNode_99, [1]: output}
+#   9: @__main___ForwardNN_construct_35:CNode_98{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>', [2]: ValueNode<Symbol> fc2}
+#  10: @__main___ForwardNN_construct_35:CNode_103{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  12: @__main___ForwardNN_construct_35:output{[0]: CNode_98, [1]: output}
+#  13: @__main___ForwardNN_construct_35:CNode_97{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:__main__..<ForwardNN::2032613203248>', [2]: ValueNode<Symbol> fc3}
+#  14: @__main___ForwardNN_construct_35:CNode_104{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#  16: @__main___ForwardNN_construct_35:output{[0]: CNode_97, [1]: output}
+#  17: @__main___ForwardNN_construct_35:CNode_105{[0]: ValueNode<Primitive> Return, [1]: output}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_36 : 000001D9498AA4A0
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_36(%para0_x) {
+  %0(CNode_106) = resolve(NameSpace[Ast: 'Namespace:mindspore.graph._parse.trope'], ne)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805, 11~28/        if len(x_shape) != 2:/
+  %1(CNode_107) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.nn.layer.basic'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805, 11~14/        if len(x_shape) != 2:/
+  %2(CNode_108) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], shape_op)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:804, 18~31/        x_shape = self.shape_op(x)/
+  %3(x_shape) = %2(%para0_x)
+      : (<Tensor[Float32], (32, 542)>) -> (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:804, 18~34/        x_shape = self.shape_op(x)/
+  %4(CNode_109) = %1(%3)
+      : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805, 11~23/        if len(x_shape) != 2:/
+  %5(CNode_110) = %0(%4, I64(2))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805, 11~28/        if len(x_shape) != 2:/
+  %6(CNode_111) = Cond(%5, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805~806, 8~50/        if len(x_shape) != 2:/
+  %7(CNode_112) = Switch(%6, @mindspore_nn_layer_basic_Dense_construct_113, @mindspore_nn_layer_basic_Dense_construct_114)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805~806, 8~50/        if len(x_shape) != 2:/
+  %8(CNode_115) = %7()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805~806, 8~50/        if len(x_shape) != 2:/
+
+#------------------------> 13
+  %9(CNode_116) = call @mindspore_nn_layer_basic_Dense_construct_37(%8)
+      : (<Tensor[Float32], (32, 542)>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~25/        output = self.fc2(output)/
+  Return(%9)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805~806, 8~50/        if len(x_shape) != 2:/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_36:CNode_108{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> shape_op}
+#   2: @mindspore_nn_layer_basic_Dense_construct_36:CNode_117{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @mindspore_nn_layer_basic_Dense_construct_36:x_shape{[0]: CNode_108, [1]: param_x}
+#   5: @mindspore_nn_layer_basic_Dense_construct_36:CNode_107{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.nn.layer.basic', [2]: ValueNode<Symbol> len}
+#   6: @mindspore_nn_layer_basic_Dense_construct_36:CNode_118{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   8: @mindspore_nn_layer_basic_Dense_construct_36:CNode_109{[0]: CNode_107, [1]: x_shape}
+#   9: @mindspore_nn_layer_basic_Dense_construct_36:CNode_106{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> ne}
+#  10: @mindspore_nn_layer_basic_Dense_construct_36:CNode_110{[0]: CNode_106, [1]: CNode_109, [2]: ValueNode<Int64Imm> 2}
+#  11: @mindspore_nn_layer_basic_Dense_construct_36:CNode_111{[0]: ValueNode<Primitive> Cond, [1]: CNode_110, [2]: ValueNode<BoolImm> false}
+#  12: @mindspore_nn_layer_basic_Dense_construct_36:CNode_112{[0]: ValueNode<Primitive> Switch, [1]: CNode_111, [2]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_113, [3]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_114}
+#  13: @mindspore_nn_layer_basic_Dense_construct_36:CNode_115{[0]: CNode_112}
+#  14: @mindspore_nn_layer_basic_Dense_construct_36:CNode_116{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_37, [1]: CNode_115}
+#  15: @mindspore_nn_layer_basic_Dense_construct_36:CNode_119{[0]: ValueNode<Primitive> Return, [1]: CNode_116}
+#  16: @mindspore_nn_layer_basic_Dense_construct_36:CNode_120{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> weight}
+#  17: @mindspore_nn_layer_basic_Dense_construct_36:CNode_121{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> bias}
+#  18: @mindspore_nn_layer_basic_Dense_construct_36:CNode_122{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> SymbolStr: 'Namespace:mindspore.nn.layer.basic', [2]: ValueNode<Symbol> ops}
+
+
+subgraph attr:
+after_block: 1
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_37 : 000001D9498AAFC0
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_37 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_36](%para0_phi_x) {
+
+#------------------------> 14
+  %0(CNode_123) = call @mindspore_nn_layer_basic_Dense_construct_38()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:808~809, 8~43/        if self.has_bias:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:808~809, 8~43/        if self.has_bias:/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_37:CNode_124{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> matmul}
+#   3: @mindspore_nn_layer_basic_Dense_construct_37:CNode_125{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   5: @mindspore_nn_layer_basic_Dense_construct_37:x{[0]: CNode_124, [1]: param_phi_x, [2]: CNode_120}
+#   6: @mindspore_nn_layer_basic_Dense_construct_37:CNode_123{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_38}
+#   7: @mindspore_nn_layer_basic_Dense_construct_37:CNode_126{[0]: ValueNode<Primitive> Return, [1]: CNode_123}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_38 : 000001D9498AAA30
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_38 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_37]() {
+
+#------------------------> 15
+  %0(CNode_127) = call @mindspore_nn_layer_basic_Dense_construct_39()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 12~43/            x = self.bias_add(x, self.bias)/
+  Return(%0)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 12~43/            x = self.bias_add(x, self.bias)/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_38:CNode_128{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> bias_add}
+#   2: @mindspore_nn_layer_basic_Dense_construct_38:CNode_129{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @mindspore_nn_layer_basic_Dense_construct_38:x{[0]: CNode_128, [1]: x, [2]: CNode_121}
+#   5: @mindspore_nn_layer_basic_Dense_construct_38:CNode_127{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_39}
+#   6: @mindspore_nn_layer_basic_Dense_construct_38:CNode_130{[0]: ValueNode<Primitive> Return, [1]: CNode_127}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_39 : 000001D9498AB550
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_39 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_38]() {
+
+#------------------------> 16
+  %0(CNode_131) = call @mindspore_nn_layer_basic_Dense_construct_40()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:810~811, 8~34/        if self.activation_flag:/
+  Return(%0)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:810~811, 8~34/        if self.activation_flag:/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_39:CNode_131{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_40}
+#   2: @mindspore_nn_layer_basic_Dense_construct_39:CNode_132{[0]: ValueNode<Primitive> Return, [1]: CNode_131}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_40 : 000001D9499D4090
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_40 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_38]() {
+
+#------------------------> 17
+  %0(CNode_133) = call @mindspore_nn_layer_basic_Dense_construct_41()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:811, 12~34/            x = self.activation(x)/
+  Return(%0)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:811, 12~34/            x = self.activation(x)/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_40:CNode_134{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>', [2]: ValueNode<Symbol> activation}
+#   2: @mindspore_nn_layer_basic_Dense_construct_40:CNode_135{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   4: @mindspore_nn_layer_basic_Dense_construct_40:x{[0]: CNode_134, [1]: x}
+#   5: @mindspore_nn_layer_basic_Dense_construct_40:CNode_133{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_41}
+#   6: @mindspore_nn_layer_basic_Dense_construct_40:CNode_136{[0]: ValueNode<Primitive> Return, [1]: CNode_133}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_41 : 000001D9499D5140
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_41 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_40]() {
+  %0(CNode_137) = resolve(NameSpace[Ast: 'Namespace:mindspore.graph._parse.trope'], ne)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812, 11~28/        if len(x_shape) != 2:/
+  %1(CNode_107) = resolve(NameSpace[SymbolStr: 'Namespace:mindspore.nn.layer.basic'], len)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:805, 11~14/        if len(x_shape) != 2:/
+  %2(CNode_108) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], shape_op)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:804, 18~31/        x_shape = self.shape_op(x)/
+  %3(x_shape) = %2(%para0_x)
+      : (<Tensor[Float32], (32, 542)>) -> (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:804, 18~34/        x_shape = self.shape_op(x)/
+  %4(CNode_138) = %1(%3)
+      : (<Tuple[Int64*2], TupleShape(NoShape, NoShape)>) -> (<Int64, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812, 11~23/        if len(x_shape) != 2:/
+  %5(CNode_139) = %0(%4, I64(2))
+      : (<Int64, NoShape>, <Int64, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812, 11~28/        if len(x_shape) != 2:/
+  %6(CNode_140) = Cond(%5, Bool(0))
+      : (<Bool, NoShape>, <Bool, NoShape>) -> (<Bool, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42/        if len(x_shape) != 2:/
+  %7(CNode_141) = Switch(%6, @mindspore_nn_layer_basic_Dense_construct_142, @mindspore_nn_layer_basic_Dense_construct_42)
+      : (<Bool, NoShape>, <Func, NoShape>, <Func, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42/        if len(x_shape) != 2:/
+
+#------------------------> 18
+  %8(CNode_143) = %7()
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42/        if len(x_shape) != 2:/
+  %9(CNode_144) = call @mindspore_nn_layer_basic_Dense_construct_145(%8)
+      : (<null>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN)
+      # In file c:\Users\neeha\mnist_project\MNIST project\Mnist_file:70, 17~25/        output = self.fc2(output)/
+  Return(%9)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42/        if len(x_shape) != 2:/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_41:CNode_146{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   3: @mindspore_nn_layer_basic_Dense_construct_41:CNode_138{[0]: CNode_107, [1]: x_shape}
+#   4: @mindspore_nn_layer_basic_Dense_construct_41:CNode_137{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> Ast: 'Namespace:mindspore.graph._parse.trope', [2]: ValueNode<Symbol> ne}
+#   5: @mindspore_nn_layer_basic_Dense_construct_41:CNode_139{[0]: CNode_137, [1]: CNode_138, [2]: ValueNode<Int64Imm> 2}
+#   6: @mindspore_nn_layer_basic_Dense_construct_41:CNode_140{[0]: ValueNode<Primitive> Cond, [1]: CNode_139, [2]: ValueNode<BoolImm> false}
+#   7: @mindspore_nn_layer_basic_Dense_construct_41:CNode_141{[0]: ValueNode<Primitive> Switch, [1]: CNode_140, [2]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_142, [3]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_42}
+#   8: @mindspore_nn_layer_basic_Dense_construct_41:CNode_143{[0]: CNode_141}
+#   9: @mindspore_nn_layer_basic_Dense_construct_41:CNode_144{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_145, [1]: CNode_143}
+#  10: @mindspore_nn_layer_basic_Dense_construct_41:CNode_147{[0]: ValueNode<Primitive> Return, [1]: CNode_144}
+
+
+subgraph attr:
+training: 1
+subgraph instance: mindspore_nn_layer_basic_Dense_construct_42 : 000001D9499D5C60
+# In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:803~815, 4~16/    def construct(self, x):/
+subgraph @mindspore_nn_layer_basic_Dense_construct_42 parent: [subgraph @mindspore_nn_layer_basic_Dense_construct_40]() {
+  %0(CNode_134) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], activation)
+      : (<External, NoShape>, <External, NoShape>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:811, 16~31/            x = self.activation(x)/
+  %1(CNode_128) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], bias_add)
+      : (<External, NoShape>, <External, NoShape>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 16~29/            x = self.bias_add(x, self.bias)/
+  %2(CNode_124) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], matmul)
+      : (<External, NoShape>, <External, NoShape>) -> (<Func, NoShape>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:807, 12~23/        x = self.matmul(x, self.weight)/
+  %3(CNode_120) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], weight)
+      : (<External, NoShape>, <External, NoShape>) -> (<Ref[Tensor[Float32]], (128, 512)>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:807, 27~38/        x = self.matmul(x, self.weight)/
+
+#------------------------> 19
+  %4(x) = %2(%para0_phi_x, %3)
+      : (<Tensor[Float32], (32, 542)>, <Ref[Tensor[Float32]], (128, 512)>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:807, 12~39/        x = self.matmul(x, self.weight)/
+  %5(CNode_121) = resolve(NameSpace[ClassMember: 'Namespace:mindspore.nn.layer.basic..<Dense::2032675657232>'], bias)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 33~42/            x = self.bias_add(x, self.bias)/
+  %6(x) = %1(%4, %5)
+      : (<null>, <null>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:809, 16~43/            x = self.bias_add(x, self.bias)/
+  %7(x) = %0(%6)
+      : (<null>) -> (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:811, 16~34/            x = self.activation(x)/
+  Return(%7)
+      : (<null>)
+      #scope: (Default/network-WithLossCell/_backbone-ForwardNN/fc2-Dense)
+      # In file C:\Users\neeha\mnist_project\MNIST project\venv311\Lib\site-packages\mindspore\nn\layer\basic.py:812~814, 8~42/        if len(x_shape) != 2:/
+}
+# Order:
+#   1: @mindspore_nn_layer_basic_Dense_construct_42:CNode_148{[0]: ValueNode<FuncGraph> mindspore_nn_layer_basic_Dense_construct_145, [1]: x}
+#   2: @mindspore_nn_layer_basic_Dense_construct_42:CNode_149{[0]: ValueNode<Primitive> Return, [1]: x}
+
+
+# ===============================================================================================
+# The total of function graphs in evaluation stack: 20/25 (Ignored 5 internal frames).
+# ===============================================================================================
+
+
+# ===============================================================================================
+# The rest function graphs are the following:
+# ===============================================================================================
+No more function graphs.
+
